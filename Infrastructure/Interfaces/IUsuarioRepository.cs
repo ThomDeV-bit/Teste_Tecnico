@@ -11,6 +11,6 @@ namespace Teste_Tecnico.Infrastructure.Interfaces
         Task<List<UsuarioListaDto>> ListarUsuarios();
         Task<Usuario> GetUsuario(string email);
         Task<bool> DeletaUsuario(int id);
-        Task AlteraUsuario(int id, Usuario usuarioAlterado);
+        Task<bool> AlteraUsuario(int id, Usuario usuarioAlterado);
     }
 }

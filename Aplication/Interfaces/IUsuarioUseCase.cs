@@ -7,6 +7,6 @@ namespace Teste_Tecnico.Aplication.Interfaces
         Task<bool> CriarUsuario(CriarUsuarioDTO usuario);
         Task<List<UsuarioListaDto>> ListarUsuarios();
         Task<bool> DeletaUsuario(int id);
-        Task AlteraUsuario(int Id, CriarUsuarioDTO usuario);
+        Task<bool> AlteraUsuario(int id, CriarUsuarioDTO usuario);
     }
 }

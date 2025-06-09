@@ -62,9 +62,9 @@ namespace Teste_Tecnico.Infrastructure.Repositories
         {
             try
             {
-                var lista = await _context.Usuarios.Select(x => new UsuarioListaDto(x.Id, x.Nome, x.Email)).ToListAsync();
+                var lista = await _context.Usuarios.OrderBy(x => x.Id).Select(x => new UsuarioListaDto(x.Id, x.Nome, x.Email)).ToListAsync();
 
-                return lista;
+                return  lista;
             }
             catch (Exception ex)
             {
@@ -114,25 +114,26 @@ namespace Teste_Tecnico.Infrastructure.Repositories
         }
 
 
-        public async Task AlteraUsuario(int id, Usuario usuarioAlterado)
+        public async Task<bool> AlteraUsuario(int id, Usuario usuarioAlterado)
         {
             try
             {
-                Usuario usuario = await _context.Usuarios.FirstAsync(x => x.Id == id);
+                var usuario = await _context.Usuarios.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (usuario == null)
-                    throw new Exception("Usuario não existe!");
+                    return false;
 
-                Usuario alterado = new Usuario
-                {
-                    Email = usuarioAlterado.Email,
-                    Nome = usuarioAlterado.Nome,
-                    Senha = usuarioAlterado.Senha,
-                };
+                usuario.Email = usuarioAlterado.Email;
 
-                _context.Usuarios.Update(usuarioAlterado);
+                usuario.Nome = usuarioAlterado.Nome;
+
+                usuario.Senha = usuarioAlterado.Senha;
+               
+                _context.Usuarios.Update(usuario);
 
                 await _context.SaveChangesAsync();
+
+                return true;
 
             }
             catch (Exception ex)

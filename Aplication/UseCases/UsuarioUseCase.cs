@@ -76,7 +76,7 @@ namespace Teste_Tecnico.Aplication.UseCases
         }
 
 
-        public async Task AlteraUsuario(int id, CriarUsuarioDTO usuario)
+        public async Task<bool> AlteraUsuario(int id, CriarUsuarioDTO usuario)
         {
             try
             {
@@ -84,10 +84,10 @@ namespace Teste_Tecnico.Aplication.UseCases
                 {
                     Email = usuario.Email,
                     Nome = usuario.Nome,
-                    Senha = usuario.Senha,
+                    Senha = Utilitarios.HashSenhaUsuario(usuario.Senha),
                 };
 
-                await _usuarioRepository.AlteraUsuario(id, usuarioAlterado);
+                return await _usuarioRepository.AlteraUsuario(id, usuarioAlterado);
             }
             catch (Exception ex)
             {

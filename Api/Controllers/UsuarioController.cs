@@ -75,7 +75,10 @@ namespace Teste_Tecnico.Api.Controllers
         {
             try
             {
-                await _usuarioUseCase.AlteraUsuario(id, usuario);
+                bool usuarioAlterado = await _usuarioUseCase.AlteraUsuario(id, usuario);
+
+                if(!usuarioAlterado)
+                    return NotFound(new { message = "Usuário não encontrado." });
 
                 return Ok(new { message = "Usuário atualizado com sucesso." });
             }
